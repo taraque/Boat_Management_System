@@ -1,0 +1,44 @@
+﻿@using BoatManagement.Models
+@{
+    ViewBag.Title = "Return Boats";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<BoatInfo> boatInfos = ViewBag.GetReturnedBoats;
+}
+
+<h3>Return Boats</h3>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive-lg">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>Boat Name</th>
+                    <th>Owner Name</th>
+                    <th>Boat Return Date</th>
+                    <th>Total Person</th>
+                    <th>Status</th>
+                </tr>
+                @if (boatInfos.Count > 0)
+                {
+                    foreach (BoatInfo boatInfo in boatInfos)
+                    {
+                        <tr>
+                            <td>@boatInfo.BoatName</td>
+                            <td>@boatInfo.OwnerName</td>
+                            <td>@boatInfo.FinishDate</td>
+                            <td>@boatInfo.TotalPerson</td>
+                            <td>Returned</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td>No boats available.</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    a:hover {
+        display: block;
+        opacity: 0.8;
+    }
+</style>
+<h3>Home </h3>
+<hr />
+<br />
+<div class="row">
+    <div class="col-12 col-md-6">
+        <a href="@Url.Action("AddBoat", "Volunteer")" style="text-decoration: none;" class="link-card">
+            <div class="card text-white">
+                <div class="card-body bg-primary">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <i class="fa fa-ship" style="font-size: 100px; color: white; padding: 10px"></i>
+                        </div>
+                        <div class="col-md-8">
+                            <h3 class="card-title">ADD BOAT</h3>
+                            <span class="card-text">Add boat information here.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        
+        <br />
+    </div>
+    <div class="col-12 col-md-6">
+        <a href="@Url.Action("CurrentBoats", "Volunteer")" style="text-decoration: none;" class="link-card">  
+            <div class="card text-white">
+                <div class="card-body bg-dark">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <i class="fa fa-anchor" style="font-size: 100px; color: white; padding: 10px"></i>
+                        </div>
+                        <div class="col-md-8">
+                            <h3 class="card-title">CURRENT BOATS</h3>
+                            <span class="card-text">View all the boats information which are added.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<br />

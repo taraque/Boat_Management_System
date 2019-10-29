@@ -1,0 +1,67 @@
+﻿@using BoatManagement.Models
+
+@{
+    ViewBag.Title = "Current Boats";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<BoatInfo> boatInfos = ViewBag.GetAllBoatInfo;
+}
+
+<h3>Current Boats</h3>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        @if (ViewBag.Message != null)
+        {
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="alert alert-success alert-dismissible" style="margin-top: 20px">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Success!</strong> @ViewBag.Message
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="table-responsive-md">
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>Boat Name</th>
+                    <th>Start Date</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if (boatInfos.Count > 0)
+                {
+                    foreach (BoatInfo boatInfo in boatInfos)
+                    {
+                        <tr>
+                            <td>
+                                @if (Convert.ToDateTime(boatInfo.FinishDate) < DateTime.Now.Date)
+                                {
+                                    <i class="fa fa-circle" style="color: red"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-circle" style="color: green"></i>
+                                }
+                                @boatInfo.BoatName
+                            </td>
+                            <td>@boatInfo.StartDate, @boatInfo.StartingTime</td>
+                            <td><a href="@Url.Action("ChangeBoatStatus", "Volunteer", new {id = boatInfo.BoatId})" class="btn btn-sm btn-success text-white">Return</a></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="3">No boats are added yet.</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <a href="@Url.Action("ReturnedBoats", "Volunteer")">Returned Boats</a>
+    </div>
+</div>

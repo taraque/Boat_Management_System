@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Ghat</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link type="text/css" rel="stylesheet" href="~/Content/font-awesome/css/font-awesome.css"/>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-light bg-dark fixed-top">
+        <div class="container">
+            @if (User.IsInRole("Volunteer"))
+            {
+                @Html.ActionLink("Ghat", "Home", "Volunteer", null, new { @class = "navbar-brand", style = "font-size: 25px; color: white" })
+            }
+            @if (User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Ghat", "Home", "Admin", null, new { @class = "navbar-brand", style = "font-size: 25px; color: white" })
+            }
+            else
+            {
+                @Html.ActionLink("Ghat", "Index", "Home", null, new { @class = "navbar-brand", style = "font-size: 25px; color: white" })
+            }
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                </ul>
+                <ul class="navbar-nav navbar-right">
+                    @if (User.IsInRole("Volunteer"))
+                    {
+                        <li class="nav-item"><a href="@Url.Action("VolunteerLogout", "Account")" class="btn-sm btn-success pull-right" style="text-decoration: none">Logout</a></li>
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item"><a href="@Url.Action("AdminLogout", "Account")" class="btn-sm btn-success pull-right" style="text-decoration: none">Logout</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+<div class="container body-content">
+    @if (User.IsInRole("Volunteer"))
+    {
+        <div class="row">
+        <div class="col-md-12">
+            <h5 class="pull-right" style="margin-top: 30px"># @HttpContext.Current.User.Identity.Name</h5>
+        </div>
+        </div>
+    }
+    @if (User.IsInRole("Admin"))
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <h5 class="pull-right" style="margin-top: 30px"># @HttpContext.Current.User.Identity.Name</h5>
+            </div>
+        </div>
+    }
+    @RenderBody()
+    <hr/>
+    <footer>
+        <p>&copy; @DateTime.Now.Year - Ghat</p>
+    </footer>
+</div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

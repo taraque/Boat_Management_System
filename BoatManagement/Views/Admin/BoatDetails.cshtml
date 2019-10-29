@@ -1,0 +1,163 @@
+﻿@using BoatManagement.Models
+@model BoatManagement.Models.BoatInfo
+@{
+    ViewBag.Title = "Boat Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    BoatInfo boatInfo = ViewBag.GetBoatInfo;
+    List<Sailors> sailors = ViewBag.GetAllSailors;
+    List<Fishermans> fishermans = ViewBag.GetAllFisherman;
+}
+
+<h3>Boat Details</h3>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <h4>@boatInfo.BoatName</h4>
+        <div class="card">
+            <div class="card-body">
+                @if (ViewBag.Message != null)
+                {
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="alert alert-success alert-dismissible" style="margin-top: 20px">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <strong>Success!</strong> @ViewBag.Message
+                            </div>
+                        </div>
+                    </div>
+                }
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="alert alert-danger alert-dismissible" style="margin-top: 20px">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <strong>Error!</strong> @ViewBag.ErrorMessage
+                            </div>
+                        </div>
+                    </div>
+                }
+                @using (Html.BeginForm("BoatDetails", "Admin", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true)
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Owner Name</label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.OwnerName, new {@class = "form-control", placeholder = "Owner's full name", Value = @boatInfo.OwnerName})
+                            @Html.ValidationMessageFor(model => model.OwnerName)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Owner NID No.</label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.OwnerNidNo, new {@class = "form-control", placeholder = "Owner's national id no.", Value = @boatInfo.OwnerNidNo})
+                            @Html.ValidationMessageFor(model => model.OwnerNidNo)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Owner Phone No.</label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.OwnerMobileNo, new {@class = "form-control", placeholder = "Owner's mobile no.", Value = @boatInfo.OwnerMobileNo})
+                            @Html.ValidationMessageFor(model => model.OwnerMobileNo)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Start Date</label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.StartDate, new {@class = "form-control", placeholder = "Starting Time e.g. 12.30 pm", Value = @boatInfo.StartDate})
+                            @Html.ValidationMessageFor(model => model.StartDate)
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-2 control-label">Starting Time</label>
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(model => model.StartingTime, new {@class = "form-control", placeholder = "Starting Time e.g. 12.30 pm", Value = @boatInfo.StartingTime})
+                            @Html.ValidationMessageFor(model => model.StartingTime)
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="form-group row">
+                        <div class="col-md-12 text-center">
+                            <input type="hidden" name="BoatId" value="@boatInfo.BoatId"/>
+                            <button type="submit" class="btn btn-success">UPDATE</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Sailors</h5>
+                <div class="table-responsive-md">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Sailor Name</th>
+                            <th>Phone No.</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if (sailors.Count > 0)
+                        {
+                            foreach (Sailors sailor in sailors)
+                            {
+                                <tr>
+                                    <td>@sailor.SailorName</td>
+                                    <td>@sailor.SailorMobileNo</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="2">No boats are added yet.</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-12">
+                <h5>Fishermans</h5>
+                <div class="table-responsive-md">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Fisherman Name</th>
+                            <th>Phone No.</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if (sailors.Count > 0)
+                        {
+                            foreach (Fishermans fisherman in fishermans)
+                            {
+                                <tr>
+                                    <td>@fisherman.FishermanName</td>
+                                    <td>@fisherman.FishermanMobileNo</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="2">No boats are added yet.</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12 text-center">
+                <h5>Total Persons : @boatInfo.TotalPerson</h5>
+            </div>
+        </div>
+    </div>
+</div>

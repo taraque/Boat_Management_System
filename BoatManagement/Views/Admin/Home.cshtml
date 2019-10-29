@@ -1,0 +1,65 @@
+﻿@using BoatManagement.Models
+
+@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<BoatInfo> boatInfos = ViewBag.GetAllBoatInfo;
+}
+
+<h3>Home</h3>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        @if (ViewBag.Message != null)
+        {
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="alert alert-success alert-dismissible" style="margin-top: 20px">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        <strong>Success!</strong> @ViewBag.Message
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="table-responsive-lg">
+            <table class="table table-bordered table-striped">
+                <tr>
+                    <th>Boat Name</th>
+                    <th>Total Person</th>
+                    <th>Start Date</th>
+                    <th>Status</th>
+                </tr>
+                @if (boatInfos.Count > 0)
+                {
+                    foreach (BoatInfo boatInfo in boatInfos)
+                    {
+                        <tr>
+                            <td>
+                                @if (Convert.ToDateTime(boatInfo.FinishDate) < DateTime.Now.Date)
+                                {
+                                    <i class="fa fa-circle" style="color: red"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-circle" style="color: green"></i>
+                                }
+                                <a href="@Url.Action("BoatDetails","Admin", new{id = boatInfo.BoatId})" style="text-decoration: none">@boatInfo.BoatName</a>
+                            </td>
+                            <td>@boatInfo.TotalPerson</td>
+                            <td>@boatInfo.StartDate, @boatInfo.StartingTime</td>
+                            <td><a href="@Url.Action("ChangeBoatStatus", "Admin", new {id = boatInfo.BoatId})" class="btn btn-sm btn-success text-white">Return</a></td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4">No boats are available.</td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <br />
+        <a href="@Url.Action("ReturnedBoats", "Admin")">Returned Boats</a>
+    </div>
+</div>
